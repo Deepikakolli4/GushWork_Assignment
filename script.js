@@ -140,21 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener('DOMContentLoaded', () => {
     initializeCompanyLogosCarousel()
   })
-  
-  // function addLogoTransitions() {
-  //   const logoImages = document.querySelectorAll('.company-logos img');
-  //   logoImages.forEach(img => {
-  //     img.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-  //   });
-  // }
-  
-  // // Call this after DOM is loaded
-  // document.addEventListener('DOMContentLoaded', () => {
-  //   addLogoTransitions();
-  // });
-
-
-//   faq section js 
 
 document.addEventListener("DOMContentLoaded", () => {
     // --- FAQ Functionality ---
