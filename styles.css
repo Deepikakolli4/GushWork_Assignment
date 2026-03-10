@@ -1754,6 +1754,23 @@
     flex-shrink: 0;
     align-items: flex-start;
   }
+
+  .applications-content .carousel-controls {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    pointer-events: none;
+    padding: 0 12px;
+  }
+
+  .applications-content .carousel-controls .carousel-btn {
+    pointer-events: auto;
+  }
   
   .carousel-btn {
     width: 48px;
@@ -1784,7 +1801,9 @@
   }
   
   .applications-carousel {
+    position: relative;
     overflow: hidden;
+    padding: 0 56px;
   }
   
   .carousel-track {
@@ -2137,6 +2156,7 @@
   
     .applications-carousel {
       overflow-x: auto;
+      padding: 0;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }

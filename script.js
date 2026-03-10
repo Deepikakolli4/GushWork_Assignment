@@ -226,56 +226,101 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     // --- Applications Carousel Functionality ---
-    const carouselTrack = document.querySelector(".carousel-track")
-    const prevBtn = document.querySelector(".prev-btn")
-    const nextBtn = document.querySelector(".next-btn")
-    const cards = document.querySelectorAll(".application-card")
-  
-    if (carouselTrack && cards.length > 0) {
+    const applicationsSection = document.querySelector(".applications-section")
+    const applicationsCarousel = applicationsSection ? applicationsSection.querySelector(".applications-carousel") : null
+    const applicationsTrack = applicationsSection ? applicationsSection.querySelector(".carousel-track") : null
+    const applicationsPrevBtn = applicationsSection ? applicationsSection.querySelector(".prev-btn") : null
+    const applicationsNextBtn = applicationsSection ? applicationsSection.querySelector(".next-btn") : null
+    const applicationCards = applicationsSection ? applicationsSection.querySelectorAll(".application-card") : []
+
+    if (applicationsCarousel && applicationsTrack && applicationCards.length > 0) {
       let currentIndex = 0
-      const cardWidth = cards[0].offsetWidth + 12 // Card width + gap
-      const visibleCards = Math.floor(carouselTrack.parentElement.offsetWidth / cardWidth)
-      const maxIndex = Math.max(0, cards.length - visibleCards)
-  
-      function updateCarousel() {
-        const translateX = -currentIndex * cardWidth
-        carouselTrack.style.transform = `translateX(${translateX}px)`
-  
-        // Update button states
-        if (prevBtn) prevBtn.disabled = currentIndex === 0
-        if (nextBtn) nextBtn.disabled = currentIndex >= maxIndex
+      let maxIndex = 0
+
+      function isMobileView() {
+        return window.innerWidth <= 768
       }
-  
-      if (prevBtn) {
-        prevBtn.addEventListener("click", () => {
+
+      function getCardWidth() {
+        const firstCard = applicationCards[0]
+        const gap = Number.parseFloat(window.getComputedStyle(applicationsTrack).columnGap || window.getComputedStyle(applicationsTrack).gap || "0")
+        return firstCard.getBoundingClientRect().width + gap
+      }
+
+      function recalculateCarouselBounds() {
+        const cardWidth = getCardWidth()
+        const viewportWidth = applicationsCarousel.clientWidth
+        const visibleCards = Math.max(1, Math.floor(viewportWidth / cardWidth))
+        maxIndex = Math.max(0, applicationCards.length - visibleCards)
+        if (currentIndex > maxIndex) currentIndex = maxIndex
+        return cardWidth
+      }
+
+      function updateApplicationsCarousel() {
+        const cardWidth = recalculateCarouselBounds()
+
+        if (isMobileView()) {
+          applicationsTrack.style.transform = "none"
+          if (applicationsPrevBtn) applicationsPrevBtn.disabled = true
+          if (applicationsNextBtn) applicationsNextBtn.disabled = true
+          return
+        }
+
+        applicationsTrack.style.transform = `translateX(${-currentIndex * cardWidth}px)`
+        if (applicationsPrevBtn) applicationsPrevBtn.disabled = currentIndex === 0
+        if (applicationsNextBtn) applicationsNextBtn.disabled = currentIndex >= maxIndex
+      }
+
+      if (applicationsPrevBtn) {
+        applicationsPrevBtn.addEventListener("click", () => {
           if (currentIndex > 0) {
             currentIndex--
-            updateCarousel()
+            updateApplicationsCarousel()
           }
         })
       }
-  
-      if (nextBtn) {
-        nextBtn.addEventListener("click", () => {
+
+      if (applicationsNextBtn) {
+        applicationsNextBtn.addEventListener("click", () => {
           if (currentIndex < maxIndex) {
             currentIndex++
-            updateCarousel()
+            updateApplicationsCarousel()
           }
         })
       }
-  
-      // Initialize carousel
-      updateCarousel()
-  
-      // Handle window resize
-      window.addEventListener("resize", () => {
-        const newVisibleCards = Math.floor(carouselTrack.parentElement.offsetWidth / cardWidth)
-        const newMaxIndex = Math.max(0, cards.length - newVisibleCards)
-  
-        if (currentIndex > newMaxIndex) {
-          currentIndex = newMaxIndex
-        }
-        updateCarousel()
+
+      updateApplicationsCarousel()
+      window.addEventListener("resize", updateApplicationsCarousel)
+
+      // Desktop drag and mobile horizontal drag both work on the viewport container.
+      let isDragging = false
+      let dragStartX = 0
+      let dragScrollLeft = 0
+
+      applicationsCarousel.addEventListener("mousedown", (e) => {
+        if (!isMobileView()) return
+        isDragging = true
+        applicationsCarousel.style.cursor = "grabbing"
+        dragStartX = e.pageX - applicationsCarousel.offsetLeft
+        dragScrollLeft = applicationsCarousel.scrollLeft
+      })
+
+      applicationsCarousel.addEventListener("mouseleave", () => {
+        isDragging = false
+        applicationsCarousel.style.cursor = "grab"
+      })
+
+      applicationsCarousel.addEventListener("mouseup", () => {
+        isDragging = false
+        applicationsCarousel.style.cursor = "grab"
+      })
+
+      applicationsCarousel.addEventListener("mousemove", (e) => {
+        if (!isDragging || !isMobileView()) return
+        e.preventDefault()
+        const x = e.pageX - applicationsCarousel.offsetLeft
+        const walk = (x - dragStartX) * 1.5
+        applicationsCarousel.scrollLeft = dragScrollLeft - walk
       })
     }
   
@@ -301,37 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
   
-    // --- Touch Scrolling for Mobile Carousel ---
-    let isDown = false
-    let startX
-    let scrollLeft
-  
-    if (carouselTrack) {
-      carouselTrack.addEventListener("mousedown", (e) => {
-        isDown = true
-        carouselTrack.style.cursor = "grabbing"
-        startX = e.pageX - carouselTrack.offsetLeft
-        scrollLeft = carouselTrack.scrollLeft
-      })
-  
-      carouselTrack.addEventListener("mouseleave", () => {
-        isDown = false
-        carouselTrack.style.cursor = "grab"
-      })
-  
-      carouselTrack.addEventListener("mouseup", () => {
-        isDown = false
-        carouselTrack.style.cursor = "grab"
-      })
-  
-      carouselTrack.addEventListener("mousemove", (e) => {
-        if (!isDown) return
-        e.preventDefault()
-        const x = e.pageX - carouselTrack.offsetLeft
-        const walk = (x - startX) * 2
-        carouselTrack.scrollLeft = scrollLeft - walk
-      })
-    }
+    // Touch drag for applications carousel is handled in its scoped block above.
   
     // --- Smooth Scroll Animation for Tab Content ---
     const observerOptions = {
