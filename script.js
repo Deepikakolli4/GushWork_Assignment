@@ -58,15 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const rightArrow = document.querySelector(".right-arrow")
     const thumbnailZoomPreview = document.querySelector(".thumbnail-zoom-preview")
   
-    // Array of image sources for the carousel
-    const imageSources = [
-      "./assets/images/frame-1.png", 
-      "./assets/images/frame-1.png",
-      "./assets/images/frame-1.png",
-      "./assets/images/frame-1.png",
-      "./assets/images/frame-1.png",
-      "./assets/images/frame-1.png",
-    ]
+    // Use actual thumbnail sources so preview and main image stay in sync.
+    const imageSources = Array.from(thumbnails).map((thumbnail) => thumbnail.getAttribute("src"))
     let currentImageIndex = 0
   
     // Function to update the main image and active thumbnail
@@ -127,54 +120,26 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
   
-  function handleCompanyLogos() {
-    const companyLogos = document.querySelector('.company-logos');
-    const logoImages = companyLogos ? companyLogos.querySelectorAll('img') : [];
-    
-    if (logoImages.length === 0) return;
-    
-    const screenWidth = window.innerWidth;
-    
-    // Hide all logos first
-    logoImages.forEach(img => {
-      img.style.display = 'none';
-    });
-    
-    // Show appropriate number of logos based on screen width
-    if (screenWidth >= 1240) {
-      // Desktop: Show all 6 icons
-      logoImages.forEach(img => {
-        img.style.display = 'block';
-      });
-    } else if (screenWidth >= 1000) {
-      // Tablet: Show 4-5 icons
-      logoImages.forEach((img, index) => {
-        img.style.display = index < 5 ? 'block' : 'none';
-      });
-    } else if(screenWidth >= 550) {
-      // Mobile: Show 3 icons
-      logoImages.forEach((img, index) => {
-        img.style.display = index < 4 ? 'block' : 'none';
-      });
-    }
-    else{
-      // Mobile: Show 3 icons
-      logoImages.forEach((img, index) => {
-        img.style.display = index < 3 ? 'block' : 'none';
-      });
-    }
+  function initializeCompanyLogosCarousel() {
+    const companyLogos = document.querySelector('.company-logos')
+    if (!companyLogos || companyLogos.dataset.carouselReady === 'true') return
 
+    const logoImages = Array.from(companyLogos.querySelectorAll('img'))
+    if (logoImages.length < 2) return
+
+    // Duplicate once so CSS animation can loop seamlessly.
+    const duplicateLogos = document.createDocumentFragment()
+    logoImages.forEach((logo) => {
+      duplicateLogos.appendChild(logo.cloneNode(true))
+    })
+
+    companyLogos.appendChild(duplicateLogos)
+    companyLogos.dataset.carouselReady = 'true'
   }
-  
-  // Initialize on page load
+
   document.addEventListener('DOMContentLoaded', () => {
-    handleCompanyLogos();
-  });
-  
-  // Handle resize events
-  window.addEventListener('resize', () => {
-    handleCompanyLogos();
-  });
+    initializeCompanyLogosCarousel()
+  })
   
   // function addLogoTransitions() {
   //   const logoImages = document.querySelectorAll('.company-logos img');

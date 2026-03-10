@@ -633,59 +633,60 @@
     opacity: 1;
   } */
 
+  .trusted-by-section .container {
+    overflow: hidden;
+  }
+
   .company-logos {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-wrap: nowrap;
     gap: 40px;
-    max-width: 1240px;
+    width: max-content;
     margin: 0 auto;
-    width: 100%;
+    animation: company-logo-scroll 24s linear infinite;
   }
-  
+
+  .company-logos:hover {
+    animation-play-state: paused;
+  }
+
   .company-logos img {
-    height: 30px;
+    height: 32px;
     width: auto;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
+    opacity: 0.75;
+    transition: opacity 0.2s ease, transform 0.2s ease;
     flex-shrink: 0;
   }
-  
+
   .company-logos img:hover {
     opacity: 1;
+    transform: translateY(-1px);
   }
-  
-  /* Desktop: Show 6 icons */
-  @media (min-width: 1240px) {
-    .company-logos {
-      gap: 50px;
+
+  @keyframes company-logo-scroll {
+    from {
+      transform: translateX(0);
     }
-    
-    .company-logos img {
-      height: 35px;
-    }
-  }
-  
-  /* Tablet: Show 4-5 icons */
-  @media (max-width: 1239px) and (min-width: 768px) {
-    .company-logos {
-      gap: 45px;
-    }
-    
-    .company-logos img {
-      height: 32px;
+    to {
+      transform: translateX(-50%);
     }
   }
-  
-  /* Mobile: Show 3 icons */
+
   @media (max-width: 767px) {
     .company-logos {
       gap: 30px;
-      justify-content: space-between;
+      animation-duration: 18s;
     }
-    
+
     .company-logos img {
       height: 28px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .company-logos {
+      animation: none;
     }
   }
 
