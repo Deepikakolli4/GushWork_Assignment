@@ -30,7 +30,7 @@
                             <li><a href="#">Product 3</a></li>
                         </ul>
                     </li>
-                    <li><button type="button" class="contact-button" onclick="window.location.href='request-call.html'">Contact Us</button></li>
+                    <li><button type="button" class="contact-button" data-open-modal="request-call-modal">Contact Us</button></li>
                 </ul>
             </nav>
             <button class="menu-toggle" aria-label="Toggle navigation menu">
@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="action-buttons ">
-                        <button type="button" class="button primary-button" onclick="window.location.href='book-consultation.html'">Get Custom Quote</button>
+                        <button type="button" class="button primary-button" data-open-modal="book-consultation-modal">Get Custom Quote</button>
                         <button class="button secondary-button">View Technical Specs <img style="width: 18px; height: 18px;" src="./assets/icons/caret-right.svg" alt="arrow-right"></button>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
                     </div>
                 </div>
                 
-                <button type="button" class="quote-button" onclick="window.location.href='book-consultation.html'">Request a Quote</button>
+                <button type="button" class="quote-button" data-open-modal="book-consultation-modal">Request a Quote</button>
             </div>
         </div>
     </section>
@@ -887,7 +887,7 @@
                     <h3 style="color:#2B3990; display: inline;">you're looking for?</h3>
                     <p>Talk to our experts for custom solutions and tailored guidance.</p>
                 </div>
-                <button type="button" class="talk-to-expert-btn" onclick="window.location.href='request-call.html'">
+                <button type="button" class="talk-to-expert-btn" data-open-modal="request-call-modal">
                     <img src="./assets/icons/phone-icon.svg" alt="Chat icon">
                     Talk to an Expert
                 </button>
@@ -1027,6 +1027,84 @@
             </div>
         </div>
     </footer>
+
+    <div id="request-call-modal" class="inline-modal" aria-hidden="true">
+        <div class="inline-modal__overlay" data-close-modal></div>
+        <div class="inline-modal__content" role="dialog" aria-modal="true" aria-labelledby="request-call-title">
+            <button type="button" class="inline-modal__close" data-close-modal aria-label="Close">&times;</button>
+            <h2 id="request-call-title">Request a Call</h2>
+            <p>Share your details and our team will call you back shortly.</p>
+            <form class="inline-modal__form">
+                <div class="inline-modal__grid">
+                    <label>
+                        Full Name
+                        <input type="text" required placeholder="Your full name">
+                    </label>
+                    <label>
+                        Phone Number
+                        <input type="tel" required placeholder="+91 98765 43210">
+                    </label>
+                    <label>
+                        Preferred Time
+                        <select required>
+                            <option value="">Select time slot</option>
+                            <option>9:00 AM - 12:00 PM</option>
+                            <option>12:00 PM - 3:00 PM</option>
+                            <option>3:00 PM - 6:00 PM</option>
+                        </select>
+                    </label>
+                    <label>
+                        Topic
+                        <input type="text" placeholder="What do you need help with?">
+                    </label>
+                    <label class="full-width">
+                        Notes
+                        <textarea placeholder="Any additional details"></textarea>
+                    </label>
+                </div>
+                <button class="inline-modal__submit" type="submit">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="book-consultation-modal" class="inline-modal" aria-hidden="true">
+        <div class="inline-modal__overlay" data-close-modal></div>
+        <div class="inline-modal__content" role="dialog" aria-modal="true" aria-labelledby="book-consultation-title">
+            <button type="button" class="inline-modal__close" data-close-modal aria-label="Close">&times;</button>
+            <h2 id="book-consultation-title">Book a Consultation</h2>
+            <p>Pick a date and slot. We will confirm your booking soon.</p>
+            <form class="inline-modal__form">
+                <div class="inline-modal__grid">
+                    <label>
+                        Full Name
+                        <input type="text" required placeholder="Your full name">
+                    </label>
+                    <label>
+                        Email Address
+                        <input type="email" required placeholder="name@example.com">
+                    </label>
+                    <label>
+                        Preferred Date
+                        <input type="date" required>
+                    </label>
+                    <label>
+                        Preferred Slot
+                        <select required>
+                            <option value="">Select slot</option>
+                            <option>10:00 AM - 11:00 AM</option>
+                            <option>12:00 PM - 1:00 PM</option>
+                            <option>3:00 PM - 4:00 PM</option>
+                        </select>
+                    </label>
+                    <label class="full-width">
+                        Requirement
+                        <textarea placeholder="Describe your use case"></textarea>
+                    </label>
+                </div>
+                <button class="inline-modal__submit" type="submit">Book Now</button>
+            </form>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -133,6 +133,108 @@
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
     z-index: 10;
   }
+
+  .inline-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    z-index: 2000;
+  }
+
+  .inline-modal.is-open {
+    display: block;
+  }
+
+  .inline-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  .inline-modal__content {
+    position: relative;
+    z-index: 1;
+    width: min(760px, calc(100% - 24px));
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  }
+
+  .inline-modal__close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    color: #6b7280;
+  }
+
+  .inline-modal__content h2 {
+    margin-bottom: 8px;
+    color: #111827;
+  }
+
+  .inline-modal__content p {
+    margin-bottom: 16px;
+    color: #6b7280;
+  }
+
+  .inline-modal__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .inline-modal__grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .inline-modal__grid label.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .inline-modal__grid input,
+  .inline-modal__grid select,
+  .inline-modal__grid textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font: inherit;
+  }
+
+  .inline-modal__grid textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+
+  .inline-modal__submit {
+    margin-top: 14px;
+    border: none;
+    border-radius: 10px;
+    background: var(--primary-blue);
+    color: #fff;
+    font-weight: 600;
+    padding: 11px 16px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 700px) {
+    .inline-modal__grid {
+      grid-template-columns: 1fr;
+    }
+  }
   
   .dropdown-menu.show {
     opacity: 1;

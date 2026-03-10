@@ -715,5 +715,58 @@ document.addEventListener('contextmenu', (e) => {
         e.preventDefault();
     }
 });
+
+function initializeInlineModals() {
+  if (document.body.dataset.inlineModalInit === "true") return
+  document.body.dataset.inlineModalInit = "true"
+
+  function closeAllModals() {
+    document.querySelectorAll(".inline-modal.is-open").forEach((modal) => {
+      modal.classList.remove("is-open")
+      modal.setAttribute("aria-hidden", "true")
+    })
+    document.body.style.overflow = ""
+  }
+
+  // Delegated click handling is resilient to future DOM changes.
+  document.addEventListener("click", (event) => {
+    const openTrigger = event.target.closest("[data-open-modal]")
+    if (openTrigger) {
+      const modalId = openTrigger.getAttribute("data-open-modal")
+      const modal = modalId ? document.getElementById(modalId) : null
+      if (!modal) return
+      closeAllModals()
+      modal.classList.add("is-open")
+      modal.setAttribute("aria-hidden", "false")
+      document.body.style.overflow = "hidden"
+      return
+    }
+
+    if (event.target.closest("[data-close-modal]")) {
+      closeAllModals()
+    }
+  })
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeAllModals()
+    }
+  })
+
+  document.querySelectorAll(".inline-modal__form").forEach((form) => {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault()
+      alert("Thanks! Your request has been submitted.")
+      closeAllModals()
+      form.reset()
+    })
+  })
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeInlineModals)
+} else {
+  initializeInlineModals()
+}
   
 
