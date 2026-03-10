@@ -1212,6 +1212,36 @@
     /* box-shadow: 0 4px 20px var(--shadow-light); */
     transition: all 0.3s ease;
     border: 1px solid var(--border-grey);
+    cursor: pointer;
+  }
+
+  .feature-card:hover {
+    border-color: #9ca3af;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .feature-card:focus-visible {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+  }
+
+  .feature-card.is-pressed {
+    transform: scale(0.99);
+  }
+
+  .feature-card.is-active {
+    border-color: var(--primary-blue);
+    box-shadow: 0 14px 28px rgba(43, 57, 144, 0.18);
+    background: #f8faff;
+  }
+
+  .feature-card.is-active .feature-title {
+    color: var(--primary-blue);
+  }
+
+  .feature-card.is-active .feature-icon {
+    background: #dbe8ff;
   }
   
   .feature-icon {

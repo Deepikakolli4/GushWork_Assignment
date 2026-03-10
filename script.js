@@ -768,5 +768,42 @@ if (document.readyState === "loading") {
 } else {
   initializeInlineModals()
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const featureCards = Array.from(document.querySelectorAll(".features-section .feature-card"))
+  if (featureCards.length === 0) return
+
+  function setActiveFeature(activeCard) {
+    featureCards.forEach((card) => {
+      const isActive = card === activeCard
+      card.classList.toggle("is-active", isActive)
+      card.setAttribute("aria-pressed", isActive ? "true" : "false")
+    })
+  }
+
+  featureCards.forEach((card) => {
+    card.setAttribute("role", "button")
+    card.setAttribute("tabindex", "0")
+    card.setAttribute("aria-pressed", "false")
+
+    card.addEventListener("click", () => setActiveFeature(card))
+
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault()
+        setActiveFeature(card)
+      }
+    })
+
+    card.addEventListener("mousedown", () => card.classList.add("is-pressed"))
+    card.addEventListener("mouseup", () => card.classList.remove("is-pressed"))
+    card.addEventListener("mouseleave", () => card.classList.remove("is-pressed"))
+    card.addEventListener("touchstart", () => card.classList.add("is-pressed"), { passive: true })
+    card.addEventListener("touchend", () => card.classList.remove("is-pressed"))
+  })
+
+  // Set first card as selected by default.
+  setActiveFeature(featureCards[0])
+})
   
 
