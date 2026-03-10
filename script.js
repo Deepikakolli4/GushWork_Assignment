@@ -60,12 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Array of image sources for the carousel
     const imageSources = [
-      "./assets/frame-1.png", 
-      "./assets/frame-1.png",
-      "./assets/frame-1.png",
-      "./assets/frame-1.png",
-      "./assets/frame-1.png",
-      "./assets/frame-1.png",
+      "./assets/images/frame-1.png", 
+      "./assets/images/frame-1.png",
+      "./assets/images/frame-1.png",
+      "./assets/images/frame-1.png",
+      "./assets/images/frame-1.png",
+      "./assets/images/frame-1.png",
     ]
     let currentImageIndex = 0
   
@@ -736,3 +736,4 @@ document.addEventListener('contextmenu', (e) => {
     }
 });
   
+

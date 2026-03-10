@@ -7,7 +7,6 @@
     --text-black: ##0D0D0D:
     --border-light: #e0e0e0;
     --border-grey: #CFD1D4;
-    /* --background-light: url('./assets/background.png'); #f8f8f8cf; */
     --tag-yellow: #FEF3C7;
     --white: #ffffff;
     --shadow-light: rgba(0, 0, 0, 0.05);
@@ -18,10 +17,10 @@
     margin: 0;
     padding: 0;
     font-family: 'Urbanist', sans-serif;
-  }
+  }s
   
   body {
-    background-image: url('./assets/texture.svg');
+    background-image: url('./assets/backgrounds/texture.svg');
     
     background-size: cover;
     background-position: center;
@@ -36,7 +35,7 @@
   }
 
   /* .bg-background {
-    background-image: url('./assets/background.png');
+    background-image: url('./assets/backgrounds/background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -3418,3 +3417,4 @@
     padding: 2px 12px;
   }
 }
+
